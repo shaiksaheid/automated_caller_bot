@@ -1,38 +1,57 @@
 import os
-
-os.environ["PATH"] += os.pathsep + r"C:\Program Files\ffmpeg\bin"
-
 import requests
-import whisper
-from requests.auth import HTTPBasicAuth
 
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+GROK_API_KEY = os.getenv("GROK_API_KEY")
 
-model = whisper.load_model("medium")
 
-def transcribe_audio(recording_url: str, call_sid: str) -> str | None:
+def transcribe_audio(recording_url: str, call_sid: str):
     try:
+        # Create temp directory
         os.makedirs("temp", exist_ok=True)
 
         audio_path = f"temp/{call_sid}.mp3"
 
-        # Download audio with Twilio auth
-        r = requests.get(
+        # Download recording from Twilio
+        response = requests.get(
             recording_url,
-            auth=(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN")),
+            auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN),
             timeout=30
         )
-        r.raise_for_status()
+        response.raise_for_status()
 
+        # Save audio file
         with open(audio_path, "wb") as f:
-            f.write(r.content)
+            f.write(response.content)
 
-        result = model.transcribe(audio_path)
+        # Send audio to Grok
+        with open(audio_path, "rb") as audio_file:
+            grok_response = requests.post(
+                "https://api.x.ai/v1/audio/transcriptions",
+                headers={
+                    "Authorization": f"Bearer {GROK_API_KEY}"
+                },
+                files={
+                    "file": audio_file
+                },
+                data={
+                    "model": "grok-1"
+                },
+                timeout=60
+            )
+
+        grok_response.raise_for_status()
+
+        result = grok_response.json()
         text = result.get("text", "").strip()
+
+        # Cleanup temp file
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
 
         return text if text else None
 
     except Exception as e:
-        print("Transcription error:", e)
+        print(f"Grok transcription error: {e}")
         return None
