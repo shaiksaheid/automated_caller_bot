@@ -84,7 +84,7 @@ export function Analytics() {
 
       if (type === "Today's Report") {
         window.open(
-          `http://localhost:8000/admin/daily-report?report_date=${today}`,
+          `https://automated-caller-bot-1.onrender.com/admin/daily-report?report_date=${today}`,
           "_blank"
         );
         return;
