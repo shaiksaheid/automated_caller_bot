@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://automated-caller-bot-1.onrender.com";
 
 export function Dashboard() {
 

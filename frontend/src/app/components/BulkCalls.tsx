@@ -24,7 +24,7 @@ export function BulkCalls() {
   // 📥 Fetch campaigns
   const fetchCampaigns = async () => {
     try {
-      const res = await fetch("http://localhost:8000/admin/bulk-campaigns");
+      const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/bulk-campaigns");
       const data = await res.json();
       setCampaigns(data);
     } catch {
@@ -82,7 +82,7 @@ export function BulkCalls() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/admin/bulk-call", {
+      const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/bulk-call", {
         method: "POST",
         body: formData,
       });

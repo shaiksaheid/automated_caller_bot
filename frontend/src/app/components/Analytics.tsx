@@ -24,9 +24,9 @@ export function Analytics() {
   const fetchAnalytics = async () => {
     try {
       const [summary, trends, excuses] = await Promise.all([
-        fetch("http://localhost:8000/admin/summary").then(res => res.json()),
-        fetch("http://localhost:8000/admin/weekly-trend").then(res => res.json()),
-        fetch("http://localhost:8000/admin/top-excuses").then(res => res.json())
+        fetch("https://automated-caller-bot-1.onrender.com/admin/summary").then(res => res.json()),
+        fetch("https://automated-caller-bot-1.onrender.com/admin/weekly-trend").then(res => res.json()),
+        fetch("https://automated-caller-bot-1.onrender.com/admin/top-excuses").then(res => res.json())
       ]);
 
       setAnalytics({
@@ -97,14 +97,14 @@ export function Analytics() {
         }
 
         window.open(
-          `http://localhost:8000/admin/daily-report?report_date=${selectedDate}`,
+          `https://automated-caller-bot-1.onrender.com/admin/daily-report?report_date=${selectedDate}`,
           "_blank"
         );
         return;
       }
 
       if (type === "Flagged Students") {
-        const res = await fetch("http://localhost:8000/admin/flagged-students");
+        const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/flagged-students");
         const data = await res.json();
 
         const students = data.students || data;
@@ -123,7 +123,7 @@ export function Analytics() {
       }
 
       if (type === "Common Excuses") {
-        const res = await fetch("http://localhost:8000/admin/top-excuses");
+        const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/top-excuses");
         const data = await res.json();
 
         const csv = Object.entries(data)
@@ -135,7 +135,7 @@ export function Analytics() {
       }
 
       if (type === "Call Success Rate") {
-        const res = await fetch("http://localhost:8000/admin/summary");
+        const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/summary");
         const data = await res.json();
 
         const csv = `total_calls,recorded_calls\n${data.total_calls},${data.total_recorded}`;
@@ -144,7 +144,7 @@ export function Analytics() {
       }
 
       if (type === "Attendance Trends") {
-        const res = await fetch("http://localhost:8000/admin/weekly-trend");
+        const res = await fetch("https://automated-caller-bot-1.onrender.com/admin/weekly-trend");
         const data = await res.json();
 
         const csv = data.weekly_trend

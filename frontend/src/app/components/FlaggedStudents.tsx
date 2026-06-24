@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, TrendingUp, Phone } from "lucide-react";
 import { toast } from "sonner";
 
-const API = "http://localhost:8000";
+const API = "https://automated-caller-bot-1.onrender.com";
 
 export function FlaggedStudents() {
   const [riskStats, setRiskStats] = useState<any>({});
