@@ -50,7 +50,7 @@ router = APIRouter(
 async def voice(request: Request):
     student_id = request.query_params.get("student_id")
 
-    base_url = "https://humberto-prominority-rovingly.ngrok-free.dev"
+    base_url = "https://automated-caller-bot-1.onrender.com/calls"
 
     twiml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
