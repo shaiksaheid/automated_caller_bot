@@ -24,7 +24,7 @@ def make_call(to_number: str, student_id: int):
 
 
 def make_bulk_call(to_number: str, message: str):
-    base_url = "https://humberto-prominority-rovingly.ngrok-free.dev"
+    base_url = "https://automated-caller-bot-1.onrender.com"  
 
     # ✅ ENCODE MESSAGE
     encoded_message = quote(message)

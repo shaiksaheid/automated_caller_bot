@@ -597,7 +597,7 @@ def call_absent_students(date: str, db: Session = Depends(get_db)):
 
     client = Client(account_sid, auth_token)
 
-    base_url = "https://humberto-prominority-rovingly.ngrok-free.dev"
+    base_url = "https://automated-caller-bot-1.onrender.com"  
 
     called_students = []
 
